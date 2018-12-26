@@ -107,85 +107,104 @@ class _MineState extends State<MinePageDataWidget> {
   Widget getList() {
     if (subjects.length != 0) {
       return ListView.builder(
+          padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
           itemCount: subjects.length,
           itemBuilder: (BuildContext context, int position) {
             return getItem(subjects[position]);
           });
     } else {
-      return CupertinoActivityIndicator();
+      return CircularProgressIndicator();
     }
   }
 
   Widget getItem(var subject) {
-//    演员列表
-    var avatars = List.generate(
-      subject['casts'].length,
-      (int index) => Container(
-            margin: EdgeInsets.only(left: index.toDouble() == 0.0 ? 0.0 : 16.0),
-            child: CircleAvatar(
-                backgroundColor: Colors.white10,
-                backgroundImage:
-                    NetworkImage(subject['casts'][index]['avatars']['small'])),
-          ),
-    );
-    var row = Container(
-      margin: EdgeInsets.all(4.0),
-      child: Row(
+    var item = new Container(
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 9),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ClipRRect(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: const BorderRadius.only(
+                topLeft: const Radius.circular(4.0),
+                topRight: const Radius.circular(4.0)),
             child: Image.network(
               subject['images']['large'],
-              width: 100.0,
-              height: 150.0,
-              fit: BoxFit.fill,
+              width: double.infinity,
+              height: 140.0,
+              fit: BoxFit.cover,
             ),
           ),
-          Expanded(
-              child: Container(
-            margin: EdgeInsets.only(left: 8.0),
-            height: 150.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Container(
+            margin: const EdgeInsets.fromLTRB(12, 15, 10, 0),
+            child: Text(
+              subject['title'],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+                color: const Color(0xFF1B1C2C),
+              ),
+              maxLines: 1,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(12, 2, 10, 0),
+            width: double.infinity,
+            height: 40,
+            child: Stack(
+              alignment: Alignment.centerLeft,
               children: <Widget>[
-//                    电影名称
                 Text(
-                  subject['title'],
+                  '豆瓣评分：${subject['rating']['average']}',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12.0,
+                    color: const Color(0xFFEC6434),
                   ),
                   maxLines: 1,
                 ),
-//                    豆瓣评分
-                Text(
-                  '豆瓣评分：${subject['rating']['average']}',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-//                    类型
-                Text("类型：${subject['genres'].join("、")}"),
-//                    导演
-                Text('导演：${subject['directors'][0]['name']}'),
-//                    演员
-                Container(
-                  margin: EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text('主演：'),
-                      Row(
-                        children: avatars,
-                      )
-                    ],
+                Positioned(
+                  right: 0,
+                  // child: Container(
+                  //   width: 60,
+                  //   child: FlatButton(
+                  //     color: const Color(0xFFFFD646),
+                  //     textColor: Colors.white,
+                  //     splashColor: Colors.grey,
+                  //     child: Text("兑换"),
+                  //     shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(20.0)),
+                  //     onPressed: () => {},
+                  //   ),
+                  // ),
+                  child: new ClipRRect(
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(16.0)),
+                    child: new Container(
+                      width: 60,
+                      color: const Color(0xFFFFD646),
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 6),
+                      child: new Center(
+                        child: new Text(
+                          "兑换",
+                          style: new TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
-          ))
+          ),
         ],
       ),
     );
     return Card(
-      child: row,
+      margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+      elevation: 3.5,
+      child: item,
     );
   }
 
@@ -199,7 +218,7 @@ class _MineState extends State<MinePageDataWidget> {
       body: new Container(
         color: Colors.white,
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -228,7 +247,7 @@ class _MineState extends State<MinePageDataWidget> {
                   ],
                 ),
                 new Container(
-                  margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+                  margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
                   child: new Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
@@ -321,86 +340,12 @@ class _MineState extends State<MinePageDataWidget> {
                 ),
                 new Expanded(
                   child: new Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                    // margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                     child: new Center(
                       child: getList(),
                     ),
                   ),
                 )
-                // new Container(
-                //   margin: const EdgeInsets.fromLTRB(0, 15.0, 15, 0),
-                //   child: new HeadInnerSquareBox(
-                //     child: new Container(
-                //       padding:
-                //           const EdgeInsets.fromLTRB(24.0, 28.0, 24.0, 12.0),
-                //       width: double.infinity,
-                //       child: new Column(
-                //         mainAxisAlignment: MainAxisAlignment.start,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: <Widget>[
-                //           new Text(
-                //             "Unit 1 Lesson 3 About animal",
-                //             style: new TextStyle(
-                //               fontSize: 20.0,
-                //               fontFamily: "Round",
-                //               color: Colors.black,
-                //             ),
-                //           ),
-                //           new Container(
-                //             margin:
-                //                 const EdgeInsets.only(top: 5.0, bottom: 13.0),
-                //             child: new Image.asset(
-                //                 "assets/images/publish_work_line.png"),
-                //           ),
-                //           new Wrap(
-                //             alignment: WrapAlignment.start,
-                //             children: <Widget>[
-                //               new WorkTotalItem(
-                //                 title: "课文跟读 12",
-                //               ),
-                //               new WorkTotalItem(
-                //                 title: "课文跟读 12",
-                //               ),
-                //               new WorkTotalItem(
-                //                 title: "课文跟读 12",
-                //               ),
-                //               new WorkTotalItem(
-                //                 title: "课文跟读 12",
-                //               ),
-                //             ],
-                //           ),
-                //           new Container(
-                //             margin: const EdgeInsets.only(left: 178.0),
-                //             child: new Stack(
-                //               children: <Widget>[
-                //                 new Image.asset(
-                //                     "assets/images/publish_work_sign.png"),
-                //                 new Positioned(
-                //                   left: 4.0,
-                //                   top: 4.0,
-                //                   child: new Text(
-                //                     "预习",
-                //                     style: new TextStyle(
-                //                         fontSize: 14.0, color: Colors.white),
-                //                   ),
-                //                 )
-                //               ],
-                //             ),
-                //           ),
-                //           new Container(
-                //             alignment: Alignment.topRight,
-                //             child: new Text(
-                //               "明天12:00截止",
-                //               style: new TextStyle(
-                //                   fontSize: 12.0,
-                //                   color: const Color(0xFFFFC1C1)),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             )),
       ),
