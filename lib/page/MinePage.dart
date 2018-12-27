@@ -107,13 +107,15 @@ class _MineState extends State<MinePageDataWidget> {
   Widget getList() {
     if (subjects.length != 0) {
       return ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
           itemCount: subjects.length,
           itemBuilder: (BuildContext context, int position) {
             return getItem(subjects[position]);
           });
     } else {
-      return CircularProgressIndicator();
+      return CupertinoActivityIndicator();
     }
   }
 
@@ -215,139 +217,21 @@ class _MineState extends State<MinePageDataWidget> {
       // appBar: new AppBar(
       //   title: new Text("我的"),
       // ),
-      body: new Container(
-        color: Colors.white,
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    // new IconButton(
-                    //   iconSize: 10.0,
-                    //   icon: new Image.asset("images/ic_mine_set.png"),
-                    //   onPressed: () {
-                    //     print("设置");
-                    //   },
-                    // ),
-                    new Listener(
-                      child: new Container(
-                        width: 24.0,
-                        height: 24.0,
-                        margin: const EdgeInsets.only(right: 7.0),
-                        child: Image(
-                          image: AssetImage("images/ic_mine_set.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      onPointerDown: (event) => print("设置"),
-                    ),
-                  ],
-                ),
+      body: Container(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildListDelegate([HeaderWidget()]),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate([
                 new Container(
-                  margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                  child: new Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      new Image.asset("images/bg_mine_head.png"),
-                      new Positioned(
-                        left: 20.0,
-                        child: new Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            new Text(
-                              "889",
-                              style: new TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF241F18),
-                              ),
-                            ),
-                            new Text(
-                              "已获取小红花奖励",
-                              style: new TextStyle(
-                                fontSize: 13.0,
-                                color: const Color(0xFFA57C00),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      new Positioned(
-                          right: 0,
-                          top: 20,
-                          child: new Stack(
-                            children: <Widget>[
-                              new ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: const Radius.circular(16.0),
-                                      bottomLeft: const Radius.circular(16.0)),
-                                  child: new Container(
-                                    color: const Color(0xFFEC6434),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 5, 10, 6),
-                                    child: new Row(
-                                      children: <Widget>[
-                                        new Text(
-                                          "小红花攻略",
-                                          style: new TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-                new Container(
-                  padding:
-                      const EdgeInsets.only(left: 75.0, top: 25, right: 75.0),
-                  child: new Row(
-                    children: <Widget>[
-                      new Expanded(
-                        child: new Container(
-                          margin: const EdgeInsets.only(
-                            right: 10.0,
-                          ),
-                          color: const Color(0xFFC8C8C8),
-                          height: 1.0,
-                        ),
-                      ),
-                      new Text(
-                        "赚小红花 换成长礼",
-                        style: new TextStyle(
-                          fontSize: 14.0,
-                          color: const Color(0xFF484848),
-                        ),
-                      ),
-                      new Expanded(
-                        child: new Container(
-                          margin: const EdgeInsets.only(
-                            left: 10.0,
-                          ),
-                          color: const Color(0xFFC8C8C8),
-                          height: 1.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                new Expanded(
-                  child: new Container(
-                    // margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                    child: new Center(
-                      child: getList(),
-                    ),
-                  ),
+                  child: getList(),
                 )
-              ],
-            )),
+              ]),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -399,6 +283,145 @@ class WorkTotalItem extends StatelessWidget {
           // decoration: TextDecoration.none
         ),
       ),
+    );
+  }
+}
+
+class BodyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container();
+  }
+}
+
+class HeaderWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      color: Colors.white,
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  // new IconButton(
+                  //   iconSize: 10.0,
+                  //   icon: new Image.asset("images/ic_mine_set.png"),
+                  //   onPressed: () {
+                  //     print("设置");
+                  //   },
+                  // ),
+                  new Listener(
+                    child: new Container(
+                      width: 24.0,
+                      height: 24.0,
+                      margin: const EdgeInsets.only(right: 7.0),
+                      child: Image(
+                        image: AssetImage("images/ic_mine_set.png"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    onPointerDown: (event) => print("设置"),
+                  ),
+                ],
+              ),
+              new Container(
+                margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                child: new Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    new Image.asset("images/bg_mine_head.png"),
+                    new Positioned(
+                      left: 20.0,
+                      child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          new Text(
+                            "889",
+                            style: new TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF241F18),
+                            ),
+                          ),
+                          new Text(
+                            "已获取小红花奖励",
+                            style: new TextStyle(
+                              fontSize: 13.0,
+                              color: const Color(0xFFA57C00),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    new Positioned(
+                        right: 0,
+                        top: 20,
+                        child: new Stack(
+                          children: <Widget>[
+                            new ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: const Radius.circular(16.0),
+                                    bottomLeft: const Radius.circular(16.0)),
+                                child: new Container(
+                                  color: const Color(0xFFEC6434),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 6),
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new Text(
+                                        "小红花攻略",
+                                        style: new TextStyle(
+                                          fontSize: 12.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ))
+                  ],
+                ),
+              ),
+              new Container(
+                padding:
+                    const EdgeInsets.only(left: 75.0, top: 25, right: 75.0),
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Container(
+                        margin: const EdgeInsets.only(
+                          right: 10.0,
+                        ),
+                        color: const Color(0xFFC8C8C8),
+                        height: 1.0,
+                      ),
+                    ),
+                    new Text(
+                      "赚小红花 换成长礼",
+                      style: new TextStyle(
+                        fontSize: 14.0,
+                        color: const Color(0xFF484848),
+                      ),
+                    ),
+                    new Expanded(
+                      child: new Container(
+                        margin: const EdgeInsets.only(
+                          left: 10.0,
+                        ),
+                        color: const Color(0xFFC8C8C8),
+                        height: 1.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
