@@ -91,15 +91,16 @@ class _MineState extends State<MinePageDataWidget> {
   }
 
   loadData() async {
-    String loadRUL = "https://api.douban.com/v2/movie/in_theaters";
+    String loadRUL =
+        "https://minigrowth.imsupercard.com/mgr/api/v1/goods/goods";
     Dio dio = new Dio();
     Response response = await dio.get(loadRUL);
     var result = response.data;
     print(result);
     setState(() {
-      title = result['title'];
-      print('title: $title');
-      subjects = result['subjects'];
+      // title = result['title'];
+      // print('title: $title');
+      subjects = result['data'];
       print(subjects);
     });
   }
@@ -130,18 +131,18 @@ class _MineState extends State<MinePageDataWidget> {
                 topLeft: const Radius.circular(4.0),
                 topRight: const Radius.circular(4.0)),
             child: Image.network(
-              subject['images']['large'],
+              subject['imgs'][0]['img_url'],
               width: double.infinity,
-              height: 140.0,
+              height: 180.0,
               fit: BoxFit.cover,
             ),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(12, 15, 10, 0),
             child: Text(
-              subject['title'],
+              subject['goods_name'],
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                // fontWeight: FontWeight.bold,
                 fontSize: 16.0,
                 color: const Color(0xFF1B1C2C),
               ),
@@ -156,7 +157,7 @@ class _MineState extends State<MinePageDataWidget> {
               alignment: Alignment.centerLeft,
               children: <Widget>[
                 Text(
-                  '豆瓣评分：${subject['rating']['average']}',
+                  subject['goods_credits'].toString() + "小红花",
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 12.0,
@@ -218,17 +219,50 @@ class _MineState extends State<MinePageDataWidget> {
       //   title: new Text("我的"),
       // ),
       body: Container(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverList(
-              delegate: SliverChildListDelegate([HeaderWidget()]),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                // new IconButton(
+                //   iconSize: 10.0,
+                //   icon: new Image.asset("images/ic_mine_set.png"),
+                //   onPressed: () {
+                //     print("设置");
+                //   },
+                // ),
+                new Listener(
+                  child: new Container(
+                    width: 24.0,
+                    height: 24.0,
+                    margin: const EdgeInsets.only(
+                        top: 12.0, right: 7.0, bottom: 12.0),
+                    child: Image(
+                      image: AssetImage("images/ic_mine_set.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  onPointerDown: (event) => print("设置"),
+                ),
+              ],
             ),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                new Container(
-                  child: getList(),
-                )
-              ]),
+            Expanded(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverList(
+                    delegate: SliverChildListDelegate([HeaderWidget()]),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      new Container(
+                        child: getList(),
+                      )
+                    ]),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -298,38 +332,25 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      color: Colors.white,
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  // new IconButton(
-                  //   iconSize: 10.0,
-                  //   icon: new Image.asset("images/ic_mine_set.png"),
-                  //   onPressed: () {
-                  //     print("设置");
-                  //   },
-                  // ),
-                  new Listener(
-                    child: new Container(
-                      width: 24.0,
-                      height: 24.0,
-                      margin: const EdgeInsets.only(right: 7.0),
-                      child: Image(
-                        image: AssetImage("images/ic_mine_set.png"),
-                        fit: BoxFit.fill,
-                      ),
+                  Text(
+                    "未登录",
+                    style: new TextStyle(
+                      fontSize: 18.0,
+                      color: const Color(0xFF1B1C2C),
+                      // decoration: TextDecoration.none
                     ),
-                    onPointerDown: (event) => print("设置"),
-                  ),
+                  )
                 ],
               ),
               new Container(
-                margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
                 child: new Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
