@@ -339,18 +339,31 @@ class HeaderWidget extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(
-                    "未登录",
-                    style: new TextStyle(
-                      fontSize: 18.0,
-                      color: const Color(0xFF1B1C2C),
-                      // decoration: TextDecoration.none
+                  new ClipOval(
+                    child: new FadeInImage.assetNetwork(
+                      placeholder: "images/ic_avatar_circle.png", //预览图
+                      fit: BoxFit.fitWidth,
+                      image:
+                          "http://thirdqq.qlogo.cn/qqapp/1106679808/DD8666A819956586B23799FBDC7A43AD/100",
+                      width: 64.0,
+                      height: 64.0,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "未登录",
+                      style: new TextStyle(
+                        fontSize: 18.0,
+                        color: const Color(0xFF1B1C2C),
+                        // decoration: TextDecoration.none
+                      ),
                     ),
                   )
                 ],
               ),
               new Container(
-                margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+                margin: const EdgeInsets.fromLTRB(0, 15, 15, 0),
                 child: new Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
