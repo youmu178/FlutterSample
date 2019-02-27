@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:baby/page/MinePage.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
 
-void main() => runApp(MinePage());
+void main() {
+  runApp(MinePage());
+  // if (Platform.isAndroid) {
+  //   // 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
+  //   SystemUiOverlayStyle systemUiOverlayStyle =
+  //       SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  //   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  // }
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -86,10 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have clicked the button this many times:'
-              // 'You have pushed the button this many times:',
-            ),
+            Text('You have clicked the button this many times:'
+                // 'You have pushed the button this many times:',
+                ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,

@@ -20,7 +20,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   dio: ^2.0.10
-  shared_preferences: ^0.4.3
+  shared_preferences: ^0.5.1+1
   flutter_statusbar: ^0.0.1
 
 dev_dependencies:
@@ -44,6 +44,7 @@ flutter:
    - images/ic_mine_set.png
    - images/bg_mine_head.png
    - images/ic_avatar_circle.png
+   - images/ic_nav_back.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

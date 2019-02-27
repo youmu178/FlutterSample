@@ -6,6 +6,7 @@ import 'package:flutter_statusbar/flutter_statusbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:baby/page/FlowerStrategy.dart';
 
 class MinePage extends StatelessWidget {
   @override
@@ -233,7 +234,7 @@ class _MineState extends State<MinePageDataWidget> {
                 //     print("设置");
                 //   },
                 // ),
-                new Listener(
+                new InkWell(
                   child: new Container(
                     width: 24.0,
                     height: 24.0,
@@ -244,7 +245,9 @@ class _MineState extends State<MinePageDataWidget> {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  onPointerDown: (event) => print("设置"),
+                  onTap: () {
+                    print("设置");
+                  },
                 ),
               ],
             ),
@@ -341,7 +344,7 @@ class HeaderWidget extends StatelessWidget {
                 children: <Widget>[
                   new ClipOval(
                     child: new FadeInImage.assetNetwork(
-                      placeholder: "images/ic_avatar_circle.png", //预览图
+                      placeholder: "images/ic_avatar_circle.png",
                       fit: BoxFit.fitWidth,
                       image:
                           "http://thirdqq.qlogo.cn/qqapp/1106679808/DD8666A819956586B23799FBDC7A43AD/100",
@@ -400,20 +403,28 @@ class HeaderWidget extends StatelessWidget {
                                 borderRadius: const BorderRadius.only(
                                     topLeft: const Radius.circular(16.0),
                                     bottomLeft: const Radius.circular(16.0)),
-                                child: new Container(
-                                  color: const Color(0xFFEC6434),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 5, 10, 6),
-                                  child: new Row(
-                                    children: <Widget>[
-                                      new Text(
-                                        "小红花攻略",
-                                        style: new TextStyle(
-                                          fontSize: 12.0,
-                                          color: Colors.white,
+                                child: InkWell(
+                                  onTap: () {
+                                    print("小红花攻略");
+                                    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context) {
+                                      return new FlowerStrategy(flowerNum: "0");
+                                    }));
+                                  },
+                                  child: new Container(
+                                    color: const Color(0xFFEC6434),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 10, 6),
+                                    child: new Row(
+                                      children: <Widget>[
+                                        new Text(
+                                          "小红花攻略",
+                                          style: new TextStyle(
+                                            fontSize: 12.0,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 )),
                           ],
